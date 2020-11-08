@@ -8,7 +8,8 @@ import './App.css';
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState("worldwide")
+  const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
   //all countries: https://disease.sh/v3/covid-19/countries
 
   // using fetch to get countries data (name, value), then set to setCountries(countries)
@@ -32,10 +33,19 @@ function App() {
 
   const onCountryChange = (event) => {
     const countryCode = event.target.value;
-    console.log("I'm working >>>>>", countryCode)
     setCountry(countryCode);
-  }
+    // here is used backtick `` because it allows us to use javascript
+    const url = countryCode === 'worldwide' ? 'https://disease.sh/v3/covid-19/all'
+      : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setCountryInfo(data);
 
+      });
+  };
+
+  console.log('Country Info -->', countryInfo)
 
   return (
     <div className="app">
@@ -60,9 +70,9 @@ function App() {
         </div>
 
         <div className="app__stats">
-          <InfoBox title="Coronavirus Cases" cases={456} total={3000} />
-          <InfoBox title="Recovered" cases={789} total={7000} />
-          <InfoBox title="Deaths" cases={65544} total={5000} />
+          <InfoBox title="Coronavirus Cases" cases={countryInfo.todayCases} total={countryInfo.cases} />
+          <InfoBox title="Recovered" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
+          <InfoBox title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths} />
 
         </div>
 
