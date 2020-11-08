@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MenuItem, FormControl, Select } from "@material-ui/core"
+import InfoBox from './InfoBox';
 import './App.css';
 
 
@@ -30,6 +31,7 @@ function App() {
   const onCountryChange = (event) => {
     const countryCode = event.target.value;
     console.log("I'm working >>>>>", countryCode)
+    setCountry(countryCode);
   }
 
 
@@ -54,11 +56,16 @@ function App() {
         </FormControl>
       </div>
 
-      {/* Header */}
-      {/* Title + select input dropdown field */}
-      {/* InfoBoxs these contain stats*/}
-      {/* InfoBoxs */}
-      {/* InfoBoxs */}
+      <div className="app__stats">
+        <InfoBox title="Coronavirus Cases" cases={456} total={3000}></InfoBox>
+        <InfoBox title="Recovered" cases={789} total={7000}></InfoBox>
+        <InfoBox title="Deaths" cases={654} total={5000}></InfoBox>
+
+        {/* InfoBoxs title:  covid-19 cases*/}
+        {/* InfoBoxs title:  covid-19 recoveries */}
+        {/* InfoBoxs */}
+      </div>
+
       {/* Table (list of countries and cases) */}
       {/* Graph */}
       {/* Map */}

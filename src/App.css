@@ -1,9 +1,18 @@
 *{
   margin:0;
 }
+
+body{
+background-color: lightgray;
+
+}
 .app__header{
   display: flex;
   margin-bottom: 20px;
   align-items: center;
+  justify-content: space-between;
+}
+.app__stats{
+  display: flex;
   justify-content: space-between;
 }
