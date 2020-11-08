@@ -12,6 +12,14 @@ function App() {
   const [countryInfo, setCountryInfo] = useState({});
   //all countries: https://disease.sh/v3/covid-19/countries
 
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then(response => response.json())
+      .then(data => {
+        setCountryInfo(data)
+      });
+  }, [])
+
   // using fetch to get countries data (name, value), then set to setCountries(countries)
   useEffect(() => {
     const getCountriesData = () => {
