@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
-      .then(response => response.json())
+      .then(respons => respons.json())
       .then(data => {
         setCountryInfo(data)
       });
@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     const getCountriesData = () => {
       fetch("https://disease.sh/v3/covid-19/countries")
-        .then((response) => response.json())
+        .then((respons) => respons.json())
         .then((data) => {
           const countries = data.map((country) => (
             {
@@ -56,11 +56,18 @@ function App() {
     const url = countryCode === 'worldwide' ? 'https://disease.sh/v3/covid-19/all'
       : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
     fetch(url)
-      .then(response => response.json())
+      .then(respons => respons.json())
       .then(data => {
         setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
+        if (countryCode !== "worldwide") {
+          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+
+        }
+        else {
+          // telling if 'worldwide' is chosen show this coordinate
+          setMapCenter({ lat: 20.5937, lng: 78.9629 });
+          setMapZoom(3);
+        }
       });
   };
 
@@ -69,7 +76,7 @@ function App() {
     <div className="app">
       <div className="app__left">
         <div className="app__header" >
-          <h2>Lets build Coronavirus tracker !</h2>
+          <h1>CORONAVIRUS LIVE</h1>
           <FormControl className="app__dropdown" >
             <Select variant="outlined" onChange={onCountryChange} value={country} >
 
