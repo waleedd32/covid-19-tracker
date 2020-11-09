@@ -12,8 +12,7 @@
 
 - Visit [console](https://console.firebase.google.com)
 - Create Project. (Project name can be anything.)
-- Setup Anonymous Authentication.
-- Setup Firestore using test mode.
+
 
 ## Dependencies
 
@@ -22,7 +21,7 @@
 - [Leaflet](https://leafletjs.com/) (1.6.0) !
 - [Chart.js](https://www.chartjs.org/docs/latest//)
 
-- Made with :heart: by Valid
+ Made with :heart: by Valid
 
 - [Click here to view project](https://covid-19-tracker-ea291.web.app/)
 
