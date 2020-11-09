@@ -1,4 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Coronavirus (COVID-19) tracker
+
+## Setup an Run
+
+- Clone this repository.
+
+- Setup Firebase(See below.)
+- Install Dependencies.
+- After setup Firebase and installed Dependencies, you can run application
+
+### Firebase
+
+- Visit [console](https://console.firebase.google.com)
+- Create Project. (Project name can be anything.)
+- Setup Anonymous Authentication.
+- Setup Firestore using test mode.
+
+## Dependencies
+
+- [Firebase](https://firebase.google.com/docs)
+- [React-leaflet](https://react-leaflet.js.org/docs/start-installation) (2.7.0) !
+- [Leaflet](https://leafletjs.com/) (1.6.0) !
+- [Chart.js](https://www.chartjs.org/docs/latest//)
+
+- Made with :heart: by Valid
+
+- [Click here to view project](https://covid-19-tracker-ea291.web.app/)
+
 
 ## Available Scripts
 
