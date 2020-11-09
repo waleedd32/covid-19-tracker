@@ -47,6 +47,26 @@ const options = {
     },
 };
 
+const typeofCaseColors = {
+    cases: {
+        hex: "darkblue",
+        rgb: "rgb(169, 32, 223)",
+        half_op: "lightblue",
+        multiplier: 800,
+    },
+    recovered: {
+        hex: "#7dd71d",
+        rgb: "rgba(125,215,29)",
+        half_op: "rgba(125,215,29,0.5)",
+        multiplier: 1200,
+    },
+    deaths: {
+        hex: "#fb4443",
+        rgb: "rgba(251,68,67)",
+        half_op: "rgba(251,68,67,0.5)",
+        multiplier: 2000,
+    }
+};
 
 
 const builddataChart = (data, typeofCase) => {
@@ -92,9 +112,10 @@ const LineGraph = ({ typeofCase = "cases", className }) => {
                     data={{
                         datasets: [
                             {
-                                backgroundColor: "rgba(204, 16, 52, 0.5)",
-                                borderColor: "#CC1034",
+                                borderColor: typeofCaseColors[typeofCase].hex,
+                                backgroundColor: typeofCaseColors[typeofCase].half_op,
                                 data: data,
+
                             },
                         ],
                     }}

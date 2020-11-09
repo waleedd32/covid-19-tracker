@@ -1,11 +1,25 @@
 .infoBox{
-    flex: 1;
-    cursor:pointer;
-    }
-    
-    .infoBox:not(:last-child){
-        margin-right: 15px;
-    }
+  flex: 1;
+  cursor:pointer;
+  }
+  
+  .infoBox:not(:last-child){
+      margin-right: 15px;
+  } 
+  .infoBox--selected{
+      border-top: 10px solid greenyellow;
+  }
+  .infoBox--red{
+      border-color: darkblue;
+  }
+  .infoBox__cases--green{
+  color:lightgreen !important;
+  }
+  .infoBox--selectedtored{
+      border-top: 10px solid red;
+  
+  }
+  
   .infoBox__cases{
       color: red;
       font-weight: 600;
@@ -17,4 +31,12 @@
       font-weight: 700 !important;
       margin-top: 15px !important; 
   }
-  
+  @media (max-width:990px){
+      .infoBox:not(:last-child){
+          margin-right: 2px;
+      }
+      .MuiTypography-root {
+          margin-left: -7px !important;
+          text-align: center;
+      }
+  }
