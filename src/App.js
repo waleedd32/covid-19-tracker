@@ -16,6 +16,8 @@ function App() {
   const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 });
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapcountries] = useState([]);
+  const [typeofCase, setTypeofCase] = useState("cases")
+
   //all countries: https://disease.sh/v3/covid-19/countries
 
   useEffect(() => {
@@ -95,17 +97,23 @@ function App() {
         </div>
 
         <div className="app__stats">
-          <InfoBox title="Coronavirus Cases"
+          <InfoBox
+            onClick={(e) => setTypeofCase('cases')}
+            title="Coronavirus Cases"
             cases={prettyPrintStat(countryInfo.todayCases)}
             total={prettyPrintStat(countryInfo.cases)}
 
           />
-          <InfoBox title="Recovered"
+          <InfoBox
+            onClick={(e) => setTypeofCase('recovered')}
+            title="Recovered"
             cases={prettyPrintStat(countryInfo.todayRecovered)}
             total={prettyPrintStat(countryInfo.recovered)}
 
           />
-          <InfoBox title="Deaths"
+          <InfoBox
+            onClick={(e) => setTypeofCase('deaths')}
+            title="Deaths"
             cases={prettyPrintStat(countryInfo.todayDeaths)}
             total={prettyPrintStat(countryInfo.deaths)}
 
@@ -114,15 +122,20 @@ function App() {
         </div>
 
 
-        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+        <Map
+          typeofCase={typeofCase}
+          countries={mapCountries}
+          center={mapCenter}
+          zoom={mapZoom}
+        />
       </div>
       <Card className="app__right">
         <CardContent>
           <h3>Live Cases by Country</h3>
           {/* Table (list of countries and cases) */}
           <Table countries={tableData} />
-          <h3>worldwide new cases</h3>
-          <LineGraph />
+          <h3>worldwide new {typeofCase}</h3>
+          <LineGraph typeofCase={typeofCase} />
 
         </CardContent>
 
