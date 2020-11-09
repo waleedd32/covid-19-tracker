@@ -13,8 +13,9 @@ function App() {
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
-  const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 })
-  const [mapZoom, setMapZoom] = useState(3)
+  const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 });
+  const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapcountries] = useState([]);
   //all countries: https://disease.sh/v3/covid-19/countries
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function App() {
 
           // set table data to the sorted version
           setTableData(sortedData);
-
+          setMapcountries(data)
           setCountries(countries)
         })
     }
@@ -58,6 +59,8 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setCountryInfo(data);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
       });
   };
 
@@ -92,7 +95,7 @@ function App() {
         </div>
 
 
-        <Map center={mapCenter} zoom={mapZoom} />
+        <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
       </div>
       <Card className="app__right">
         <CardContent>
