@@ -6,7 +6,7 @@ import './App.css';
 import Table from './Table';
 import { sortData } from './util'
 import LineGraph from './LineGraph';
-
+import "leaflet/dist/leaflet.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -97,10 +97,9 @@ function App() {
           <h3>Live Cases by Country</h3>
           {/* Table (list of countries and cases) */}
           <Table countries={tableData} />
-
           <h3>worldwide new cases</h3>
           <LineGraph />
-          {/* Graph */}
+
         </CardContent>
 
       </Card>
