@@ -101,7 +101,7 @@ function App() {
             isRed
             active={typeofCase === "cases"}
             onClick={(e) => setTypeofCase('cases')}
-            title="Coronavirus Cases"
+            title="Cases"
             cases={prettyPrintStat(countryInfo.todayCases)}
             total={prettyPrintStat(countryInfo.cases)}
 
@@ -140,8 +140,8 @@ function App() {
           <h3>Live Cases by Country</h3>
           {/* Table (list of countries and cases) */}
           <Table countries={tableData} />
-          <h3>worldwide new {typeofCase}</h3>
-          <LineGraph typeofCase={typeofCase} />
+          <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
+          <LineGraph className="app__graph" typeofCase={typeofCase} />
 
         </CardContent>
 
