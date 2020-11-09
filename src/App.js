@@ -5,6 +5,7 @@ import Map from './Map';
 import './App.css';
 import Table from './Table';
 import { sortData } from './util'
+import LineGraph from './LineGraph';
 
 
 function App() {
@@ -58,7 +59,6 @@ function App() {
       });
   };
 
-  console.log('Country Info -->', countryInfo)
 
   return (
     <div className="app">
@@ -99,7 +99,7 @@ function App() {
           <Table countries={tableData} />
 
           <h3>worldwide new cases</h3>
-
+          <LineGraph />
           {/* Graph */}
         </CardContent>
 
