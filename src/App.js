@@ -13,6 +13,8 @@ function App() {
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 })
+  const [mapZoom, setMapZoom] = useState(3)
   //all countries: https://disease.sh/v3/covid-19/countries
 
   useEffect(() => {
@@ -90,7 +92,7 @@ function App() {
         </div>
 
 
-        <Map />
+        <Map center={mapCenter} zoom={mapZoom} />
       </div>
       <Card className="app__right">
         <CardContent>
