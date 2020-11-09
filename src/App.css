@@ -40,6 +40,10 @@ body{
   flex-grow: 1;
 } 
 
+.app__graph__title{
+margin-top:11px;
+
+}
 .app__graph{
   flex-grow: 1;
 }

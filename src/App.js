@@ -7,6 +7,7 @@ import Table from './Table';
 import { sortData, prettyPrintStat } from './util'
 import LineGraph from './LineGraph';
 import "leaflet/dist/leaflet.css";
+import Footer from './Footer';
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -40,7 +41,6 @@ function App() {
               value: country.countryInfo.iso2
             }));
           let sortedData = sortData(data)
-
           // set table data to the sorted version
           setTableData(sortedData);
           setMapcountries(data)
@@ -48,7 +48,6 @@ function App() {
         })
     }
     getCountriesData();
-
   }, [])
 
   const onCountryChange = (event) => {
@@ -63,7 +62,6 @@ function App() {
         setCountryInfo(data);
         if (countryCode !== "worldwide") {
           setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-
         }
         else {
           // telling if 'worldwide' is chosen show this coordinate
@@ -81,21 +79,14 @@ function App() {
           <h1>CORONAVIRUS LIVE</h1>
           <FormControl className="app__dropdown" >
             <Select variant="outlined" onChange={onCountryChange} value={country} >
-
               <MenuItem value="worldwide">Worldwide</MenuItem>
-
               {/* looping through every country and show list of options as a drop down */}
               {countries.map(country => (
                 <MenuItem value={country.value}>{country.name} </MenuItem>
-
               ))}
-
-
             </Select>
-
           </FormControl>
         </div>
-
         <div className="app__stats">
           <InfoBox
             isRed
@@ -104,7 +95,6 @@ function App() {
             title="Cases"
             cases={prettyPrintStat(countryInfo.todayCases)}
             total={prettyPrintStat(countryInfo.cases)}
-
           />
           <InfoBox
             isGreen
@@ -113,7 +103,6 @@ function App() {
             title="Recovered"
             cases={prettyPrintStat(countryInfo.todayRecovered)}
             total={prettyPrintStat(countryInfo.recovered)}
-
           />
           <InfoBox
             isRed
@@ -122,12 +111,8 @@ function App() {
             title="Deaths"
             cases={prettyPrintStat(countryInfo.todayDeaths)}
             total={prettyPrintStat(countryInfo.deaths)}
-
           />
-
         </div>
-
-
         <Map
           typeofCase={typeofCase}
           countries={mapCountries}
@@ -135,17 +120,18 @@ function App() {
           zoom={mapZoom}
         />
       </div>
-      <Card className="app__right">
-        <CardContent>
-          <h3>Live Cases by Country</h3>
-          {/* Table (list of countries and cases) */}
-          <Table countries={tableData} />
-          <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
-          <LineGraph className="app__graph" typeofCase={typeofCase} />
-
-        </CardContent>
-
-      </Card>
+      <div className="app__right">
+        <Card >
+          <CardContent>
+            <h3>Live Cases by Country</h3>
+            {/* Table (list of countries and cases) */}
+            <Table countries={tableData} />
+            <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
+            <LineGraph className="app__graph" typeofCase={typeofCase} />
+          </CardContent>
+        </Card>
+        <Footer />
+      </div>
     </div>
   );
 }
