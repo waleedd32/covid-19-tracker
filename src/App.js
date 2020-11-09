@@ -4,6 +4,7 @@ import InfoBox from './InfoBox';
 import Map from './Map';
 import './App.css';
 import Table from './Table';
+import { sortData } from './util'
 
 
 function App() {
@@ -32,8 +33,12 @@ function App() {
               name: country.country,
               value: country.countryInfo.iso2
             }));
+          let sortedData = sortData(data)
+
+          // set table data to the sorted version
+          setTableData(sortedData);
+
           setCountries(countries)
-          setTableData(data);
         })
     }
     getCountriesData();
