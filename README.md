@@ -4,7 +4,7 @@
 
 - Clone this repository.
 
-- Setup Firebase(See below.)
+- Setup Firebase(See below.)(For free Firebase hosting(deploy))
 - Install Dependencies.
 - After setup Firebase and installed Dependencies, you can run application
 
