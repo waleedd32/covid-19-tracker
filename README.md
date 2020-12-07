@@ -1,5 +1,7 @@
 # Coronavirus (COVID-19) tracker
 
+- [Click here to view the project](https://covid-19-tracker-ea291.web.app/)
+
 ## Setup an Run
 
 - Clone this repository.
@@ -12,7 +14,6 @@
 - Visit [console](https://console.firebase.google.com)
 - Create Project. (Project name can be anything.)
 
-
 ## Dependencies
 
 - [Firebase](https://firebase.google.com/docs)
@@ -20,10 +21,9 @@
 - [Leaflet](https://leafletjs.com/) (1.6.0) !
 - [Chart.js](https://www.chartjs.org/docs/latest//)
 
- Made with :heart: by Valid
+Made with :heart: by Valid
 
 - [Click here to view project](https://covid-19-tracker-ea291.web.app/)
-
 
 ## Available Scripts
 
