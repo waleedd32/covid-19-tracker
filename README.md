@@ -13,7 +13,7 @@ This project is a React-based web application to track the live stats of COVID-1
 - 📄 Data Table: Lists all countries along with their total cases.
 - 📱 Responsive Design: Ensures the app looks good on all devices, from mobile to desktop.
 
-## Features:
+## Libraries & Frameworks
 
 - ReactJS: The primary framework used for building the application.
 - Material-UI: A popular React UI framework for styling and layout.
