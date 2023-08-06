@@ -1,6 +1,24 @@
-# Coronavirus (COVID-19) tracker
+# 🌍 Coronavirus (COVID-19) Live Stats Tracker
+
+This project is a React-based web application to track the live stats of COVID-19. It utilizes disease.sh's API to fetch global and country-wise stats, and visualizes them using Material-UI components and the Leaflet Map library.
 
 - [Click here to view the project](https://covid-19-tracker-ea291.web.app/)
+
+## Features:
+
+- 🌐 Country Selector: Choose any country from the dropdown or select "Worldwide" to get statistics for the entire world.
+- 📈 Live Statistics: Displays the most recent statistics for cases, recoveries, and deaths.
+- 🗺 Interactive Map: Visualizes the spread of the virus. Zoom in to see the number of cases in specific regions.
+- 📊 Historical Data Line Chart: Uses the react-chartjs-2 library to provide a line chart displaying the trend of cases, recoveries, or deaths over the past 120 days.
+- 📄 Data Table: Lists all countries along with their total cases.
+- 📱 Responsive Design: Ensures the app looks good on all devices, from mobile to desktop.
+
+## Features:
+
+- ReactJS: The primary framework used for building the application.
+- Material-UI: A popular React UI framework for styling and layout.
+- Leaflet: A leading open-source JavaScript library used for mobile-friendly interactive maps.
+- react-chartjs-2: A React wrapper for Chart.js 2.
 
 ## Setup an Run
 
