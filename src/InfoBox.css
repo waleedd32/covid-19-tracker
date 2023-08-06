@@ -1,51 +1,51 @@
-.infoBox{
+.infoBox {
   flex: 1;
-  cursor:pointer;
+  cursor: pointer;
+  border-radius: 30px !important;
 }
-  
-.infoBox:not(:last-child){
-  margin-right: 15px;
-} 
 
-.infoBox--selected{
+.infoBox:not(:last-child) {
+  margin-right: 15px;
+}
+
+.infoBox--selected {
   border-top: 10px solid greenyellow;
 }
 
-.infoBox--red{
+.infoBox--red {
   border-color: darkblue;
 }
 
-.infoBox__cases--green{
-  color:lightgreen !important;
+.infoBox__cases--green {
+  color: lightgreen !important;
 }
 
-.infoBox--selectedtored{
+.infoBox--selectedtored {
   border-top: 10px solid red;
 }
-  
-.infoBox__cases{
+
+.infoBox__cases {
   color: red;
   font-weight: 600;
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
 }
-.infoBox__total{
-  color:red;
+.infoBox__total {
+  color: red;
   font-weight: 700 !important;
-  margin-top: 15px !important; 
+  margin-top: 15px !important;
 }
-@media (max-width:990px){
- .infoBox:not(:last-child){
-   margin-right: 2px;
-}
+@media (max-width: 990px) {
+  .infoBox:not(:last-child) {
+    margin-right: 2px;
+  }
 
- .MuiTypography-root {
-   margin-left: -7px !important;
-   text-align: center;
-}
+  .MuiTypography-root {
+    margin-left: -7px !important;
+    text-align: center;
+  }
 
- .infoBox__cases{
-   text-align: center;
-
-}
+  .infoBox__cases {
+    text-align: center;
+  }
 }
