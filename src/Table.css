@@ -1,23 +1,33 @@
-.table{
+.table {
   margin-top: 20px;
   overflow: scroll;
   height: 400px;
 }
-.table tr {
-    display: flex;
-    justify-content: space-between;
-}
-.table td{
-padding: 0.5rem;
+.table table {
+  border-collapse: collapse;
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
 }
 
-.table tr:nth-of-type(odd){
-  background-color:darkblue;
-  color:#dbc4f5;
-    
+.table tr {
+  border: none;
+  display: flex;
+  justify-content: space-between;
 }
-.table tr:nth-of-type(even){
-  background-color:lightblue;
-  color:black;
+.table td {
+  border: none;
+
+  padding: 0.5rem;
 }
-    
+
+.table tr:nth-of-type(odd) {
+  background-color: darkblue;
+  color: #dbc4f5;
+}
+.table tr:nth-of-type(even) {
+  background-color: lightblue;
+  color: black;
+}
