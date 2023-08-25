@@ -28,11 +28,17 @@ function App() {
   //all countries: https://disease.sh/v3/covid-19/countries
 
   useEffect(() => {
-    fetch("https://disease.sh/v3/covid-19/all")
-      .then((respons) => respons.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://disease.sh/v3/covid-19/all");
+        const data = await response.json();
         setCountryInfo(data);
-      });
+      } catch (error) {
+        console.error("An error occurred while fetching global data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // using fetch to get countries data (name, value), then set to setCountries(countries)
