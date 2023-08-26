@@ -43,21 +43,25 @@ function App() {
 
   // using fetch to get countries data (name, value), then set to setCountries(countries)
   useEffect(() => {
-    const getCountriesData = () => {
-      fetch("https://disease.sh/v3/covid-19/countries")
-        .then((respons) => respons.json())
-        .then((data) => {
-          const countries = data.map((country) => ({
-            name: country.country,
-            value: country.countryInfo.iso2,
-          }));
-          let sortedData = sortData(data);
-          // set table data to the sorted version
-          setTableData(sortedData);
-          setMapcountries(data);
-          setCountries(countries);
-        });
+    const getCountriesData = async () => {
+      try {
+        const response = await fetch(
+          "https://disease.sh/v3/covid-19/countries"
+        );
+        const data = await response.json();
+        const countries = data.map((country) => ({
+          name: country.country,
+          value: country.countryInfo.iso2,
+        }));
+        const sortedData = sortData(data);
+        setTableData(sortedData);
+        setMapcountries(data);
+        setCountries(countries);
+      } catch (error) {
+        console.error("An error occurred while fetching countries:", error);
+      }
     };
+
     getCountriesData();
   }, []);
 
