@@ -65,26 +65,35 @@ function App() {
     getCountriesData();
   }, []);
 
-  const onCountryChange = (event) => {
+  const onCountryChange = async (event) => {
     const countryCode = event.target.value;
     setCountry(countryCode);
-    // here is used backtick `` because it allows us to use javascript
+
     const url =
       countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
         : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
-    fetch(url)
-      .then((respons) => respons.json())
-      .then((data) => {
-        setCountryInfo(data);
-        if (countryCode !== "worldwide") {
-          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        } else {
-          // telling if 'worldwide' is chosen show this coordinate
-          setMapCenter({ lat: 20.5937, lng: 78.9629 });
-          setMapZoom(3);
-        }
-      });
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setCountryInfo(data);
+
+      if (countryCode !== "worldwide") {
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+      } else {
+        setMapCenter({ lat: 20.5937, lng: 78.9629 });
+        setMapZoom(3);
+      }
+    } catch (error) {
+      console.error(
+        `An error occurred while fetching data for ${countryCode}:`,
+        error
+      );
+    }
   };
 
   return (
