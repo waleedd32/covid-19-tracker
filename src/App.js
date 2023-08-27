@@ -31,6 +31,10 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch("https://disease.sh/v3/covid-19/all");
+        if (!response.ok) {
+          console.error(`HTTP Error: ${response.status}`);
+          return;
+        }
         const data = await response.json();
         setCountryInfo(data);
       } catch (error) {
@@ -48,6 +52,10 @@ function App() {
         const response = await fetch(
           "https://disease.sh/v3/covid-19/countries"
         );
+        if (!response.ok) {
+          console.error(`HTTP Error: ${response.status}`);
+          return;
+        }
         const data = await response.json();
         const countries = data.map((country) => ({
           name: country.country,
@@ -77,7 +85,8 @@ function App() {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        console.error(`HTTP Error: ${response.status}`);
+        return;
       }
       const data = await response.json();
       setCountryInfo(data);
