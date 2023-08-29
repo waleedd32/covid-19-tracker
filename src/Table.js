@@ -14,6 +14,7 @@ function Table({ countries }) {
                 <div>
                   <img
                     src={countryInfo.flag}
+                    alt={`${country}'s flag`}
                     style={{ height: "23px", width: "35px" }}
                   />
                 </div>
