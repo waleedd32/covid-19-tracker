@@ -119,7 +119,9 @@ function App() {
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {/* looping through every country and show list of options as a drop down */}
               {countries.map((country) => (
-                <MenuItem value={country.value}>{country.name} </MenuItem>
+                <MenuItem key={country.value} value={country.value}>
+                  {country.name}{" "}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
