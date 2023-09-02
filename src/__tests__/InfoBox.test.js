@@ -38,6 +38,7 @@ describe("<InfoBox />", () => {
 
   it('applies the "infoBox--selectedtored" class when activetored is true', () => {
     const { container } = render(<InfoBox activetored={true} />);
+    // screen.debug(undefined, Infinity);
     expect(container.firstChild).toHaveClass("infoBox--selectedtored");
   });
 });
