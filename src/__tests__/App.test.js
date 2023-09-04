@@ -24,9 +24,31 @@ describe("<App />", () => {
     );
 
     const { findByText } = render(<App />);
-
+    await screen.debug(undefined, Infinity);
     // Check for "100.0" as today's cases
     const casesElement = await findByText("100.0");
     expect(casesElement).toBeInTheDocument();
+
+    // Check for "1.0k" as the total cases
+    const totalCasesElement = await findByText("1.0k Total");
+    expect(totalCasesElement).toBeInTheDocument();
+
+    // Check for "50.0" as today's recovered
+    const recoveredElement = await findByText("50.0");
+    expect(recoveredElement).toBeInTheDocument();
+
+    // Check for "500" as the total recovered
+    const totalRecoveredElement = await findByText("500.0 Total");
+    expect(totalRecoveredElement).toBeInTheDocument();
+
+    // Check for "10.0" as today's deaths
+    const deathsElement = await findByText("10.0");
+    expect(deathsElement).toBeInTheDocument();
+
+    // Check for "100" as the total deaths
+    const totalDeathsElement = await findByText("101.0 Total");
+    expect(totalDeathsElement).toBeInTheDocument();
+
+    // screen.debug(undefined, Infinity);
   });
 });
