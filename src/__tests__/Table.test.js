@@ -1,7 +1,8 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect"; // for the "toBeInTheDocument" matcher
+import { render, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect"; // this is for the "toBeInTheDocument" matcher
 import Table from "../Table";
+import fallbackImage from "../countries.png";
 
 describe("Table Component", () => {
   const mockCountries = [
@@ -20,6 +21,19 @@ describe("Table Component", () => {
       },
     },
   ];
+
+  test("renders fallback image when flag image loading fails", () => {
+    const { getAllByRole } = render(<Table countries={mockCountries} />);
+
+    // Getting the images in the document
+    const images = getAllByRole("img");
+
+    // Triggering an error on the first image
+    fireEvent.error(images[0]);
+
+    // Checking if the src of the image is updated to the fallback image
+    expect(images[0]).toHaveAttribute("src", fallbackImage);
+  });
 
   test("renders Table component with countries data", () => {
     const { getByText, getAllByRole } = render(

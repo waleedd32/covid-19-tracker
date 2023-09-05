@@ -1,13 +1,13 @@
 import React from "react";
 import "./Table.css";
 import numeral from "numeral";
+import fallbackImage from "./countries.png";
 
 function Table({ countries }) {
   return (
     <div className="table">
       <table>
         <tbody>
-          {/* here we have done destructuring(split it a part) */}
           {countries.map(({ country, cases, countryInfo }) => (
             <tr key={country}>
               <td>
@@ -15,6 +15,10 @@ function Table({ countries }) {
                   <img
                     src={countryInfo.flag}
                     alt={`${country}'s flag`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = fallbackImage;
+                    }}
                     style={{ height: "23px", width: "35px" }}
                   />
                 </div>
