@@ -51,4 +51,21 @@ describe("<App />", () => {
 
     // screen.debug(undefined, Infinity);
   });
+
+  it("changes typeofCase when InfoBox is clicked", () => {
+    const { getByText } = render(<App />);
+
+    const newCases = getByText("worldwide new cases");
+    fireEvent.click(getByText("Cases"));
+    expect(newCases).toBeInTheDocument();
+
+    fireEvent.click(getByText("Recovered"));
+    const newRecovered = getByText("worldwide new recovered");
+    expect(newRecovered).toBeInTheDocument();
+
+    fireEvent.click(getByText("Deaths"));
+    const newDeaths = getByText("worldwide new deaths");
+    expect(newDeaths).toBeInTheDocument();
+    // screen.debug(undefined, Infinity);
+  });
 });
