@@ -24,6 +24,7 @@ function App() {
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapcountries] = useState([]);
   const [typeofCase, setTypeofCase] = useState("cases");
+  const [apiStatus, setApiStatus] = useState("loading"); // 'loading', 'success', 'error'
 
   //all countries: https://disease.sh/v3/covid-19/countries
 
@@ -33,12 +34,15 @@ function App() {
         const response = await fetch("https://disease.sh/v3/covid-19/all");
         if (!response.ok) {
           console.error(`HTTP Error: ${response.status}`);
+          setApiStatus("error");
           return;
         }
         const data = await response.json();
         setCountryInfo(data);
+        setApiStatus("success");
       } catch (error) {
         console.error("An error occurred while fetching global data:", error);
+        setApiStatus("error");
       }
     };
 
@@ -117,7 +121,6 @@ function App() {
               value={country}
             >
               <MenuItem value="worldwide">Worldwide</MenuItem>
-              {/* looping through every country and show list of options as a drop down */}
               {countries.map((country, index) => (
                 <MenuItem key={index} value={country.value}>
                   {country.name}{" "}
@@ -127,30 +130,39 @@ function App() {
           </FormControl>
         </div>
         <div className="app__stats">
-          <InfoBox
-            isRed
-            active={typeofCase === "cases"}
-            onClick={(e) => setTypeofCase("cases")}
-            title="Cases"
-            cases={prettyPrintStat(countryInfo.todayCases)}
-            total={prettyPrintStat(countryInfo.cases)}
-          />
-          <InfoBox
-            isGreen
-            active={typeofCase === "recovered"}
-            onClick={(e) => setTypeofCase("recovered")}
-            title="Recovered"
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
-            total={prettyPrintStat(countryInfo.recovered)}
-          />
-          <InfoBox
-            isRed
-            activetored={typeofCase === "deaths"}
-            onClick={(e) => setTypeofCase("deaths")}
-            title="Deaths"
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
-            total={prettyPrintStat(countryInfo.deaths)}
-          />
+          {apiStatus === "error" ? (
+            <div>Refresh the page</div>
+          ) : (
+            <>
+              <InfoBox
+                apiStatus={apiStatus}
+                isRed
+                active={typeofCase === "cases"}
+                onClick={(e) => setTypeofCase("cases")}
+                title="Cases"
+                cases={prettyPrintStat(countryInfo.todayCases)}
+                total={prettyPrintStat(countryInfo.cases)}
+              />
+              <InfoBox
+                apiStatus={apiStatus}
+                isGreen
+                active={typeofCase === "recovered"}
+                onClick={(e) => setTypeofCase("recovered")}
+                title="Recovered"
+                cases={prettyPrintStat(countryInfo.todayRecovered)}
+                total={prettyPrintStat(countryInfo.recovered)}
+              />
+              <InfoBox
+                apiStatus={apiStatus}
+                isRed
+                activetored={typeofCase === "deaths"}
+                onClick={(e) => setTypeofCase("deaths")}
+                title="Deaths"
+                cases={prettyPrintStat(countryInfo.todayDeaths)}
+                total={prettyPrintStat(countryInfo.deaths)}
+              />
+            </>
+          )}
         </div>
         <Map
           typeofCase={typeofCase}
