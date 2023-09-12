@@ -5,6 +5,7 @@ import {
   Select,
   Card,
   CardContent,
+  Button,
 } from "@material-ui/core";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
@@ -25,27 +26,28 @@ function App() {
   const [mapCountries, setMapcountries] = useState([]);
   const [typeofCase, setTypeofCase] = useState("cases");
   const [apiStatus, setApiStatus] = useState("loading"); // 'loading', 'success', 'error'
+  const [showDetails, setShowDetails] = useState(false); // Initialize state
 
   //all countries: https://disease.sh/v3/covid-19/countries
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://disease.sh/v3/covid-19/all");
-        if (!response.ok) {
-          console.error(`HTTP Error: ${response.status}`);
-          setApiStatus("error");
-          return;
-        }
-        const data = await response.json();
-        setCountryInfo(data);
-        setApiStatus("success");
-      } catch (error) {
-        console.error("An error occurred while fetching global data:", error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://disease.sh/v3/covid-19/all");
+      if (!response.ok) {
+        console.error(`HTTP Error: ${response.status}`);
         setApiStatus("error");
+        return;
       }
-    };
+      const data = await response.json();
+      setCountryInfo(data);
+      setApiStatus("success");
+    } catch (error) {
+      console.error("An error occurred while fetching global data:", error);
+      setApiStatus("error");
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -133,8 +135,26 @@ function App() {
           {apiStatus === "error" ? (
             <div>
               <h2>Oops! Something went wrong.</h2>
-              <p>We couldn't fetch the data. Please try refreshing the page.</p>
-              <button onClick={() => window.location.reload()}>Refresh</button>
+              <p>We couldn't fetch the data. Please try again.</p>
+              <div className="button-container">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => setShowDetails(!showDetails)}
+                >
+                  {showDetails ? "Hide Details" : "Show Details"}
+                </Button>
+                {showDetails && (
+                  <p>It looks like we're experiencing a server/API issue.</p>
+                )}
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={fetchData}
+                >
+                  Try Again
+                </Button>
+              </div>
             </div>
           ) : (
             <>
