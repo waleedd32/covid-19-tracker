@@ -131,7 +131,11 @@ function App() {
         </div>
         <div className="app__stats">
           {apiStatus === "error" ? (
-            <div>Refresh the page</div>
+            <div>
+              <h2>Oops! Something went wrong.</h2>
+              <p>We couldn't fetch the data. Please try refreshing the page.</p>
+              <button onClick={() => window.location.reload()}>Refresh</button>
+            </div>
           ) : (
             <>
               <InfoBox
