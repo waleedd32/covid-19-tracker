@@ -27,6 +27,8 @@ function App() {
   const [typeofCase, setTypeofCase] = useState("cases");
   const [apiStatus, setApiStatus] = useState("loading"); // 'loading', 'success', 'error'
   const [showDetails, setShowDetails] = useState(false); // Initialize state
+  const [tableApiStatus, setTableApiStatus] = useState("loading"); // 'loading', 'success', 'error'
+  const [showTableDetails, setShowTableDetails] = useState(false); // Initialize state
 
   //all countries: https://disease.sh/v3/covid-19/countries
 
@@ -47,35 +49,34 @@ function App() {
     }
   };
 
+  // using fetch to get countries data (name, value), then set to setCountries(countries)
+  const getCountriesData = async () => {
+    try {
+      const response = await fetch("https://disease.sh/v3/covid-19/countries");
+      if (!response.ok) {
+        console.error(`HTTP Error: ${response.status}`);
+        setTableApiStatus("error");
+
+        return;
+      }
+      const data = await response.json();
+      const countries = data.map((country) => ({
+        name: country.country,
+        value: country.countryInfo.iso2,
+      }));
+      const sortedData = sortData(data);
+      setTableData(sortedData);
+      setMapcountries(data);
+      setCountries(countries);
+      setTableApiStatus("success");
+    } catch (error) {
+      console.error("An error occurred while fetching countries:", error);
+      setTableApiStatus("error");
+    }
+  };
+
   useEffect(() => {
     fetchData();
-  }, []);
-
-  // using fetch to get countries data (name, value), then set to setCountries(countries)
-  useEffect(() => {
-    const getCountriesData = async () => {
-      try {
-        const response = await fetch(
-          "https://disease.sh/v3/covid-19/countries"
-        );
-        if (!response.ok) {
-          console.error(`HTTP Error: ${response.status}`);
-          return;
-        }
-        const data = await response.json();
-        const countries = data.map((country) => ({
-          name: country.country,
-          value: country.countryInfo.iso2,
-        }));
-        const sortedData = sortData(data);
-        setTableData(sortedData);
-        setMapcountries(data);
-        setCountries(countries);
-      } catch (error) {
-        console.error("An error occurred while fetching countries:", error);
-      }
-    };
-
     getCountriesData();
   }, []);
 
@@ -199,8 +200,35 @@ function App() {
         <Card>
           <CardContent>
             <h3>Live Cases by Country</h3>
-            {/* Table (list of countries and cases) */}
-            <Table countries={tableData} />
+            {tableApiStatus === "error" ? (
+              <div className="app__tableError">
+                <h4>Oops! Something went wrong.</h4>
+                <p>
+                  We couldn't fetch the data for the table. Please try again.
+                </p>
+                <div className="button-container">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => setShowTableDetails(!showTableDetails)}
+                  >
+                    {showTableDetails ? "Hide Details" : "Show Details"}
+                  </Button>
+                  {showTableDetails && (
+                    <p>It looks like we're experiencing a server/API issue.</p>
+                  )}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => getCountriesData()}
+                  >
+                    Try Again
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Table countries={tableData} />
+            )}
             <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
             <LineGraph className="app__graph" typeofCase={typeofCase} />
           </CardContent>
