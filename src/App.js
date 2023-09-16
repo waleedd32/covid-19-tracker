@@ -134,7 +134,7 @@ function App() {
         </div>
         <div className="app__stats">
           {apiStatus === "error" ? (
-            <div>
+            <div className="app__tableError">
               <h2>Oops! Something went wrong.</h2>
               <p>We couldn't fetch the data. Please try again.</p>
               <div className="button-container">
@@ -200,35 +200,40 @@ function App() {
         <Card>
           <CardContent>
             <h3>Live Cases by Country</h3>
-            {tableApiStatus === "error" ? (
-              <div className="app__tableError">
-                <h4>Oops! Something went wrong.</h4>
-                <p>
-                  We couldn't fetch the data for the table. Please try again.
-                </p>
-                <div className="button-container">
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => setShowTableDetails(!showTableDetails)}
-                  >
-                    {showTableDetails ? "Hide Details" : "Show Details"}
-                  </Button>
-                  {showTableDetails && (
-                    <p>It looks like we're experiencing a server/API issue.</p>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => getCountriesData()}
-                  >
-                    Try Again
-                  </Button>
+
+            <div>
+              {tableApiStatus === "error" ? (
+                <div className="app__tableError">
+                  <h4>Oops! Something went wrong.</h4>
+                  <p>
+                    We couldn't fetch the data for the table. Please try again.
+                  </p>
+                  <div className="button-container">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => setShowTableDetails(!showTableDetails)}
+                    >
+                      {showTableDetails ? "Hide Details" : "Show Details"}
+                    </Button>
+                    {showTableDetails && (
+                      <p>
+                        It looks like we're experiencing a server/API issue.
+                      </p>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => getCountriesData()}
+                    >
+                      Try Again
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <Table countries={tableData} />
-            )}
+              ) : (
+                <Table countries={tableData} />
+              )}
+            </div>
             <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
             <LineGraph className="app__graph" typeofCase={typeofCase} />
           </CardContent>
