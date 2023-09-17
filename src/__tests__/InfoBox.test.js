@@ -13,6 +13,7 @@ describe("<InfoBox />", () => {
       total: "500",
       isRed: true,
       active: true,
+      apiStatus: "success",
     };
 
     const { getByText } = render(<InfoBox {...props} />);
