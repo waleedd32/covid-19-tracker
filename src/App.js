@@ -15,6 +15,7 @@ import { sortData, prettyPrintStat } from "./util";
 import LineGraph from "./LineGraph";
 import "leaflet/dist/leaflet.css";
 import Footer from "./Footer";
+import ApiErrorComponent from "./ApiErrorComponent";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -134,29 +135,12 @@ function App() {
         </div>
         <div className="app__stats">
           {apiStatus === "error" ? (
-            <div className="app__tableError">
-              <h2>Oops! Something went wrong.</h2>
-              <p>We couldn't fetch the data. Please try again.</p>
-              <div className="button-container">
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => setShowDetails(!showDetails)}
-                >
-                  {showDetails ? "Hide Details" : "Show Details"}
-                </Button>
-                {showDetails && (
-                  <p>It looks like we're experiencing a server/API issue.</p>
-                )}
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={fetchData}
-                >
-                  Try Again
-                </Button>
-              </div>
-            </div>
+            <ApiErrorComponent
+              onRetry={fetchData}
+              onToggleDetails={() => setShowDetails(!showDetails)}
+              showDetails={showDetails}
+              errorMsg="We couldn't fetch the data. Please try again."
+            />
           ) : (
             <>
               <InfoBox
@@ -203,33 +187,12 @@ function App() {
 
             <div>
               {tableApiStatus === "error" ? (
-                <div className="app__tableError">
-                  <h4>Oops! Something went wrong.</h4>
-                  <p>
-                    We couldn't fetch the data for the table. Please try again.
-                  </p>
-                  <div className="button-container">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => setShowTableDetails(!showTableDetails)}
-                    >
-                      {showTableDetails ? "Hide Details" : "Show Details"}
-                    </Button>
-                    {showTableDetails && (
-                      <p>
-                        It looks like we're experiencing a server/API issue.
-                      </p>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => getCountriesData()}
-                    >
-                      Try Again
-                    </Button>
-                  </div>
-                </div>
+                <ApiErrorComponent
+                  onRetry={getCountriesData}
+                  onToggleDetails={() => setShowTableDetails(!showTableDetails)}
+                  showDetails={showTableDetails}
+                  errorMsg="We couldn't fetch the data for the table. Please try again."
+                />
               ) : (
                 <Table countries={tableData} />
               )}
