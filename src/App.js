@@ -25,11 +25,12 @@ function App() {
   const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 });
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapcountries] = useState([]);
-  const [typeofCase, setTypeofCase] = useState("cases");
-  const [apiStatus, setApiStatus] = useState("loading"); // 'loading', 'success', 'error'
-  const [showDetails, setShowDetails] = useState(false); // Initialize state
+  const [selectedCaseType, setSelectedCaseType] = useState("cases");
+  const [globalDataStatus, setGlobalDataStatus] = useState("loading"); // 'loading', 'success', 'error'
+  const [isGlobalDataDetailsVisible, setIsGlobalDataDetailsVisible] =
+    useState(false); // Initialize state
   const [tableApiStatus, setTableApiStatus] = useState("loading"); // 'loading', 'success', 'error'
-  const [showTableDetails, setShowTableDetails] = useState(false); // Initialize state
+  const [isTableDetailsVisible, setIsTableDetailsVisible] = useState(false); // Initialize state
 
   //all countries: https://disease.sh/v3/covid-19/countries
 
@@ -38,15 +39,15 @@ function App() {
       const response = await fetch("https://disease.sh/v3/covid-19/all");
       if (!response.ok) {
         console.error(`HTTP Error: ${response.status}`);
-        setApiStatus("error");
+        setGlobalDataStatus("error");
         return;
       }
       const data = await response.json();
       setCountryInfo(data);
-      setApiStatus("success");
+      setGlobalDataStatus("success");
     } catch (error) {
       console.error("An error occurred while fetching global data:", error);
-      setApiStatus("error");
+      setGlobalDataStatus("error");
     }
   };
 
@@ -134,38 +135,40 @@ function App() {
           </FormControl>
         </div>
         <div className="app__stats">
-          {apiStatus === "error" ? (
+          {globalDataStatus === "error" ? (
             <ApiErrorComponent
               onRetry={fetchData}
-              onToggleDetails={() => setShowDetails(!showDetails)}
-              showDetails={showDetails}
+              onToggleDetails={() =>
+                setIsGlobalDataDetailsVisible(!isGlobalDataDetailsVisible)
+              }
+              isDetailsVisible={isGlobalDataDetailsVisible}
               errorMsg="We couldn't fetch the data. Please try again."
             />
           ) : (
             <>
               <InfoBox
-                apiStatus={apiStatus}
+                globalDataStatus={globalDataStatus}
                 isRed
-                active={typeofCase === "cases"}
-                onClick={(e) => setTypeofCase("cases")}
+                active={selectedCaseType === "cases"}
+                onClick={(e) => setSelectedCaseType("cases")}
                 title="Cases"
                 cases={prettyPrintStat(countryInfo.todayCases)}
                 total={prettyPrintStat(countryInfo.cases)}
               />
               <InfoBox
-                apiStatus={apiStatus}
+                globalDataStatus={globalDataStatus}
                 isGreen
-                active={typeofCase === "recovered"}
-                onClick={(e) => setTypeofCase("recovered")}
+                active={selectedCaseType === "recovered"}
+                onClick={(e) => setSelectedCaseType("recovered")}
                 title="Recovered"
                 cases={prettyPrintStat(countryInfo.todayRecovered)}
                 total={prettyPrintStat(countryInfo.recovered)}
               />
               <InfoBox
-                apiStatus={apiStatus}
+                globalDataStatus={globalDataStatus}
                 isRed
-                activetored={typeofCase === "deaths"}
-                onClick={(e) => setTypeofCase("deaths")}
+                activetored={selectedCaseType === "deaths"}
+                onClick={(e) => setSelectedCaseType("deaths")}
                 title="Deaths"
                 cases={prettyPrintStat(countryInfo.todayDeaths)}
                 total={prettyPrintStat(countryInfo.deaths)}
@@ -174,7 +177,7 @@ function App() {
           )}
         </div>
         <Map
-          typeofCase={typeofCase}
+          selectedCaseType={selectedCaseType}
           countries={mapCountries}
           center={mapCenter}
           zoom={mapZoom}
@@ -189,16 +192,23 @@ function App() {
               {tableApiStatus === "error" ? (
                 <ApiErrorComponent
                   onRetry={getCountriesData}
-                  onToggleDetails={() => setShowTableDetails(!showTableDetails)}
-                  showDetails={showTableDetails}
+                  onToggleDetails={() =>
+                    setIsTableDetailsVisible(!isTableDetailsVisible)
+                  }
+                  isDetailsVisible={isTableDetailsVisible}
                   errorMsg="We couldn't fetch the data for the table. Please try again."
                 />
               ) : (
                 <Table countries={tableData} />
               )}
             </div>
-            <h3 className="app__graph__title">worldwide new {typeofCase}</h3>
-            <LineGraph className="app__graph" typeofCase={typeofCase} />
+            <h3 className="app__graph__title">
+              worldwide new {selectedCaseType}
+            </h3>
+            <LineGraph
+              className="app__graph"
+              selectedCaseType={selectedCaseType}
+            />
           </CardContent>
         </Card>
         <Footer />

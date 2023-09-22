@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 const ApiErrorComponent = ({
   onRetry,
   onToggleDetails,
-  showDetails,
+  isDetailsVisible,
   errorMsg,
 }) => {
   return (
@@ -13,9 +13,9 @@ const ApiErrorComponent = ({
       <p>{errorMsg}</p>
       <div className="button-container">
         <Button variant="outlined" color="primary" onClick={onToggleDetails}>
-          {showDetails ? "Hide Details" : "Show Details"}
+          {isDetailsVisible ? "Hide Details" : "Show Details"}
         </Button>
-        {showDetails && (
+        {isDetailsVisible && (
           <p>It looks like we're experiencing a server/API issue.</p>
         )}
         <Button variant="contained" color="secondary" onClick={onRetry}>

@@ -68,23 +68,23 @@ const typeofCaseColors = {
   },
 };
 
-const builddataChart = (data, typeofCase) => {
+const builddataChart = (data, selectedCaseType) => {
   let dataChart = [];
   let lastPointOfData;
   for (let date in data.cases) {
     if (lastPointOfData) {
       let newDataPoint = {
         x: date,
-        y: data[typeofCase][date] - lastPointOfData,
+        y: data[selectedCaseType][date] - lastPointOfData,
       };
       dataChart.push(newDataPoint);
     }
-    lastPointOfData = data[typeofCase][date];
+    lastPointOfData = data[selectedCaseType][date];
   }
   return dataChart;
 };
 
-const LineGraph = ({ typeofCase = "cases", className }) => {
+const LineGraph = ({ selectedCaseType = "cases", className }) => {
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const LineGraph = ({ typeofCase = "cases", className }) => {
         const data = await response.json();
 
         // Build the chart data
-        let dataChart = builddataChart(data, typeofCase);
+        let dataChart = builddataChart(data, selectedCaseType);
 
         setData(dataChart);
 
@@ -114,7 +114,7 @@ const LineGraph = ({ typeofCase = "cases", className }) => {
     };
 
     fetchData();
-  }, [typeofCase]);
+  }, [selectedCaseType]);
 
   return (
     <div className={className}>
@@ -123,8 +123,8 @@ const LineGraph = ({ typeofCase = "cases", className }) => {
           data={{
             datasets: [
               {
-                borderColor: typeofCaseColors[typeofCase].hex,
-                backgroundColor: typeofCaseColors[typeofCase].half_op,
+                borderColor: typeofCaseColors[selectedCaseType].hex,
+                backgroundColor: typeofCaseColors[selectedCaseType].half_op,
                 data: data,
               },
             ],

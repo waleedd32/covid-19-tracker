@@ -10,7 +10,7 @@ function InfoBox({
   active,
   activetored,
   total,
-  apiStatus,
+  globalDataStatus,
   ...props
 }) {
   return (
@@ -25,9 +25,9 @@ function InfoBox({
         <Typography className="infoBox__title" color="textSecondary">
           {title}
         </Typography>
-        {apiStatus === "loading" ? (
+        {globalDataStatus === "loading" ? (
           <Skeleton variant="rect" />
-        ) : apiStatus === "success" ? (
+        ) : globalDataStatus === "success" ? (
           <>
             {/* here comes cases */}
             <h2
