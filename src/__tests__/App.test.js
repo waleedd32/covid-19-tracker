@@ -24,7 +24,7 @@ describe("<App />", () => {
     );
 
     const { findByText } = render(<App />);
-    await screen.debug(undefined, Infinity);
+    //  screen.debug(undefined, Infinity);
     // Check for "100.0" as today's cases
     const casesElement = await findByText("100.0");
     expect(casesElement).toBeInTheDocument();
