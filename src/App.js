@@ -137,6 +137,7 @@ function App() {
         <div className="app__stats">
           {globalDataStatus === "error" ? (
             <ApiErrorComponent
+              data-testid="globalDataErrorComponent"
               onRetry={fetchData}
               onToggleDetails={() =>
                 setIsGlobalDataDetailsVisible(!isGlobalDataDetailsVisible)
@@ -191,6 +192,7 @@ function App() {
             <div>
               {tableApiStatus === "error" ? (
                 <ApiErrorComponent
+                  data-testid="tableDataErrorComponent"
                   onRetry={getCountriesData}
                   onToggleDetails={() =>
                     setIsTableDetailsVisible(!isTableDetailsVisible)

@@ -5,7 +5,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 describe("<App />", () => {
   it("renders InfoBoxes with correct data", async () => {
-    // Mock the countryInfo data
+    // Mocking data to mimic the response from the API
     const mockCountryInfo = {
       todayCases: 100,
       cases: 1000,
@@ -15,7 +15,7 @@ describe("<App />", () => {
       deaths: 101,
     };
 
-    // here I'm using jest to mock fetch function and return mockCountryInfo
+    // Mocking fetch to return the mocked data
     global.fetch = jest.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(mockCountryInfo),
@@ -67,5 +67,38 @@ describe("<App />", () => {
     const newDeaths = getByText("worldwide new deaths");
     expect(newDeaths).toBeInTheDocument();
     // screen.debug(undefined, Infinity);
+  });
+  it("should display global data error component when fetching global data fails", async () => {
+    // Mock fetch to simulate an error response for global data
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 400,
+      })
+    );
+
+    render(<App />);
+
+    const errorComponentForGlobalData = await screen.findByTestId(
+      "globalDataErrorComponent"
+    );
+    expect(errorComponentForGlobalData).toBeInTheDocument();
+  });
+
+  it("should display table data error component when fetching table data fails", async () => {
+    // Mock fetch to simulate an error response for table data
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        status: 400,
+      })
+    );
+
+    render(<App />);
+
+    const errorComponentForTableData = await screen.findByTestId(
+      "tableDataErrorComponent"
+    );
+    expect(errorComponentForTableData).toBeInTheDocument();
   });
 });

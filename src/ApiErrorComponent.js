@@ -6,9 +6,10 @@ const ApiErrorComponent = ({
   onToggleDetails,
   isDetailsVisible,
   errorMsg,
+  ...props
 }) => {
   return (
-    <div className="app__tableError">
+    <div className="app__tableError" {...props}>
       <h2>Oops! Something went wrong.</h2>
       <p>{errorMsg}</p>
       <div className="button-container">
