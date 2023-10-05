@@ -4,6 +4,10 @@ import App from "../App";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("<App />", () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it("renders InfoBoxes with correct data", async () => {
     // Mocking data to mimic the response from the API
     const mockCountryInfo = {
@@ -100,5 +104,11 @@ describe("<App />", () => {
       "tableDataErrorComponent"
     );
     expect(errorComponentForTableData).toBeInTheDocument();
+  });
+
+  it("should have 'Worldwide' as the default option in dropdown", async () => {
+    render(<App />);
+    const dropdownElement = screen.getByRole("button", { name: /Worldwide/i });
+    expect(dropdownElement).toBeInTheDocument();
   });
 });
