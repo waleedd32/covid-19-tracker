@@ -1,7 +1,8 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import App from "../App";
 import "@testing-library/jest-dom/extend-expect";
+import userEvent from "@testing-library/user-event";
 
 describe("<App />", () => {
   afterEach(() => {
@@ -108,7 +109,68 @@ describe("<App />", () => {
 
   it("should have 'Worldwide' as the default option in dropdown", async () => {
     render(<App />);
-    const dropdownElement = screen.getByRole("button", { name: /Worldwide/i });
+    const dropdownElement = screen.getByRole("option", { name: /Worldwide/i });
     expect(dropdownElement).toBeInTheDocument();
+  });
+
+  it("should change the country when a different option is selected", async () => {
+    // Mocking fetch to mimic the response from the API
+    const mockCountryInfo = {
+      todayCases: 100,
+      cases: 1000,
+      todayRecovered: 50,
+      recovered: 500,
+      todayDeaths: 10,
+      deaths: 101,
+    };
+
+    const mockCountriesData = [
+      {
+        country: "USA",
+        countryInfo: {
+          iso2: "US",
+        },
+      },
+    ];
+
+    global.fetch = jest.fn((url) => {
+      // Determine which mock data to return based on the URL being fetched
+      if (url.includes("/all")) {
+        return Promise.resolve({
+          json: () => Promise.resolve(mockCountryInfo),
+          ok: true,
+        });
+      } else if (url.includes("/countries")) {
+        return Promise.resolve({
+          json: () => Promise.resolve(mockCountriesData),
+          ok: true,
+        });
+      }
+    });
+
+    render(<App />);
+    const user = userEvent.setup();
+
+    // Check if the default value (worldwide) is selected
+    expect(
+      screen.getByRole("option", { name: /worldwide/i }).selected
+    ).toBeTruthy();
+
+    // this one can be used if you dont want to use testId (country-option)
+    // const usaOption = await screen.findByRole("option", { name: /usa/i });
+
+    // wait for the options to be fetched and rendered:
+    const usaOption = await waitFor(() => screen.getByTestId("country-option"));
+
+    // Changing the option to USA using userEvent:
+    user.selectOptions(screen.getByRole("combobox"), usaOption.value);
+
+    screen.debug(undefined, Infinity);
+    // Checking if the USA option is now selected
+    await waitFor(() => {
+      expect(screen.getByTestId("country-option").selected).toBeTruthy();
+
+      // expect(usaOption.selected).toBeTruthy();
+    });
   });
 });

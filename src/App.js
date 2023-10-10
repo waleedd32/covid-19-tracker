@@ -119,7 +119,7 @@ function App() {
       <div className="app__left">
         <div className="app__header">
           <h1>CORONAVIRUS LIVE</h1>
-          <FormControl className="app__dropdown">
+          {/* <FormControl className="app__dropdown">
             <Select
               variant="outlined"
               onChange={onCountryChange}
@@ -127,12 +127,34 @@ function App() {
             >
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {countries.map((country, index) => (
-                <MenuItem key={index} value={country.value}>
+                <MenuItem
+                  key={index}
+                  value={country.value}
+                  data-testid="country-option"
+                >
                   {country.name}{" "}
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
+          <div className="app__dropdown">
+            <select
+              value={country}
+              onChange={onCountryChange}
+              className="custom-select"
+            >
+              <option value="worldwide">Worldwide</option>
+              {countries.map((country, index) => (
+                <option
+                  key={index}
+                  value={country.value}
+                  data-testid="country-option"
+                >
+                  {country.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="app__stats">
           {globalDataStatus === "error" ? (
