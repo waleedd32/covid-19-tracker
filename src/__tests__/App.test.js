@@ -114,7 +114,7 @@ describe("<App />", () => {
   });
 
   it("should change the country when a different option is selected", async () => {
-    // Mocking fetch to mimic the response from the API
+    // Seting up mock data for the country-specific information.
     const mockCountryInfo = {
       todayCases: 100,
       cases: 1000,
@@ -124,6 +124,7 @@ describe("<App />", () => {
       deaths: 101,
     };
 
+    // Seting up mock data for the list of countries.
     const mockCountriesData = [
       {
         country: "USA",
@@ -133,14 +134,17 @@ describe("<App />", () => {
       },
     ];
 
+    // Mocking the global fetch function to return appropriate mock data based on the endpoint being accessed.
     global.fetch = jest.fn((url) => {
-      // Determine which mock data to return based on the URL being fetched
+      // If the URL targets global data, return the mock country info.
       if (url.includes("/all")) {
         return Promise.resolve({
           json: () => Promise.resolve(mockCountryInfo),
           ok: true,
         });
-      } else if (url.includes("/countries")) {
+      }
+      // If the URL targets country data, return the mock countries list.
+      else if (url.includes("/countries")) {
         return Promise.resolve({
           json: () => Promise.resolve(mockCountriesData),
           ok: true,
@@ -159,14 +163,16 @@ describe("<App />", () => {
     // this one can be used if you dont want to use testId (country-option)
     // const usaOption = await screen.findByRole("option", { name: /usa/i });
 
-    // wait for the options to be fetched and rendered:
+    // Waiting for the country options to populate in the dropdown.
     const usaOption = await waitFor(() => screen.getByTestId("country-option"));
 
-    // Changing the option to USA using userEvent:
+    // Simulating a user action to select the "USA" option from the dropdown.
     user.selectOptions(screen.getByRole("combobox"), usaOption.value);
 
+    // Debugging line to inspect rendered elements.
     screen.debug(undefined, Infinity);
-    // Checking if the USA option is now selected
+
+    // Confirming that the "USA" option is now the selected option in the dropdown.
     await waitFor(() => {
       expect(screen.getByTestId("country-option").selected).toBeTruthy();
 
