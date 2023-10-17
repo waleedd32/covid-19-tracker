@@ -48,8 +48,36 @@ body {
 }
 
 .app__dropdown {
-  background-color: white;
-  border-radius: 10px !important;
+  position: relative;
+  display: inline-block;
+  width: 8rem;
+}
+
+.custom-select {
+  width: 100%;
+  height: 3.5rem;
+  padding: 0.625rem 1.5625rem 0.625rem 0.625rem;
+  box-sizing: border-box;
+  border: 0.0625rem solid #e0e0e0;
+  border-radius: 0.3125rem;
+  appearance: none; /* to remove the default arrow */
+  background-color: #ffffff;
+  font-size: 1rem;
+}
+
+.custom-select:focus {
+  border: 0.0625rem solid #3f51b5;
+  outline: none;
+}
+
+.app__dropdown::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 0.9375rem;
+  transform: translateY(-50%);
+  pointer-events: none; /* so it doesn't interfere with the select */
+  color: #3f51b5;
 }
 
 .button-container {
@@ -59,6 +87,7 @@ body {
   margin-top: 0.5rem;
   gap: 1rem;
 }
+
 .app__tableError {
   display: flex;
   flex-direction: column;
